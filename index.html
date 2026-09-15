@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audloop — Privacy Policy</title>
+
+<!--
+  隐私政策的网页版，与 app 内那一份是同一套正文（app 内读的是 strings.xml，见 docs/adr/0013）。
+  正文一个字都不要在这里改：改它等于改对外承诺，两处一旦分叉，应用内对用户的承诺就不是对外承诺了。
+  要改，先在 app/src/main/res/values*/strings.xml 改，再同步到这里。
+
+  五套语言的正文都在这一个文件里，靠 JS 显隐——给出的 URL 只有一个，Play Console 那个字段也只
+  收一个。?lang=ja 可以直接定位到某一语言，方便把链接分享给对应语种的人。
+
+  正文之外的语言名（English / 中文 / 日本語 / 한국어 / Español）故意不走翻译：它们是你在看不懂
+  当前界面时用来找路的，跟着界面语言变就失去意义。与 app 调试页的 LOCALE_CHOICES 同一个道理。
+-->
+
+<style>
+  :root {
+    --bg: #F7F8FA;
+    --surface: #FFFFFF;
+    --border: #E5E7EB;
+    --fg: #1A1D24;
+    --muted: #6B7280;
+    --accent: #3B6FE0;
+    --accent-soft: #EAF1FF;
+  }
+
+  /* app 只做了浅色界面，这里跟着给一套夜间配色，省得深夜点开一片惨白。 */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14161A;
+      --surface: #1C1F26;
+      --border: #2C313A;
+      --fg: #E8EAEE;
+      --muted: #9AA1AC;
+      --accent: #7BA2F0;
+      --accent-soft: #1E2A42;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", "PingFang SC", "Hiragino Sans", "Noto Sans SC",
+      "Noto Sans JP", "Noto Sans KR", "Malgun Gothic", "Microsoft YaHei",
+      Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .wrap {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.5rem;
+    flex-wrap: wrap;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+  }
+
+  .brand {
+    font-weight: 700;
+    letter-spacing: .01em;
+  }
+
+  .langs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
+  }
+
+  .langs button {
+    font: inherit;
+    font-size: .875rem;
+    line-height: 1.6;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    padding: .15rem .7rem;
+    cursor: pointer;
+  }
+
+  .langs button:hover { color: var(--fg); }
+
+  .langs button[aria-current="true"] {
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+
+  main { padding-bottom: 5rem; }
+
+  article {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem 2rem 2.25rem;
+    margin-top: 1.5rem;
+  }
+
+  /*
+    没 JS 时只摆英文——它是 app 里的回退语言（values/ 那一份），也是审核员最可能读的那一份。
+    列五个语言叠着比只给一份更糟。
+    两边都以 html 打头，不靠源码先后压对方：JS 一跑就是 js 那一对生效，没跑就是 not(.js)
+    那一对，两边各自成对、互不重叠，改哪边都不会让另一边变成一片空白。
+  */
+  html:not(.js) article { display: none; }
+  html:not(.js) article[data-lang="en"] { display: block; }
+  html.js article { display: none; }
+  html.js article.on { display: block; }
+
+  h1 {
+    font-size: 1.75rem;
+    line-height: 1.4;
+    margin: 0 0 .25rem;
+  }
+
+  .updated {
+    color: var(--muted);
+    font-size: .875rem;
+    margin: 0 0 2rem;
+  }
+
+  h2 {
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    margin: 2rem 0 .5rem;
+  }
+
+  p { margin: 0 0 1rem; }
+
+  ul {
+    margin: 0 0 1rem;
+    padding-left: 1.1rem;
+  }
+
+  li { margin: 0 0 .5rem; }
+
+  a { color: var(--accent); }
+
+  @media (max-width: 30rem) {
+    article { padding: 1.5rem 1.25rem 1.75rem; border-radius: .75rem; }
+    h1 { font-size: 1.5rem; }
+  }
+
+  /* 上面那层 sticky 头在打印时会盖住正文，也印不出意义。 */
+  @media print {
+    header { display: none; }
+    article { border: 0; padding: 0; margin: 0; }
+    body { background: #fff; }
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap bar">
+    <span class="brand">Audloop</span>
+    <nav class="langs" id="langs" aria-label="Language / 语言 / 言語 / 언어 / Idioma"></nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<article data-lang="en" lang="en">
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: September 16, 2026</p>
+
+  <h2>In short</h2>
+  <p>Audloop plays the audio and video you pick from your phone and splits their speech into sentences entirely on your device. Your files, and the text derived from them, never leave your phone. Three things do go over the network — the feedback you choose to submit, a small set of anonymous usage events, and a crash report if the app crashes. Each is described below.</p>
+
+  <h2>What stays on your phone</h2>
+  <ul>
+    <li>The audio and video you import are read-only. They are never copied, moved or uploaded.</li>
+    <li>Speech recognition runs on your device, using a model the app downloads from Google Play. No audio is sent anywhere to be transcribed.</li>
+    <li>The sentences produced by parsing are stored in a private database inside the app and are never uploaded.</li>
+    <li>Deleting a resource removes the app's record of it. The original file on your phone is not touched.</li>
+  </ul>
+
+  <h2>What leaves your phone</h2>
+  <p>Feedback you submit. When you tap Submit, the app sends what you wrote, which type you picked, the app version, your device model, your Android version, the system language, and the time of submission. It goes to a database run by Google Firebase, and contains no account and no identifier that points back to you.</p>
+  <p>Anonymous usage events. The app records whether certain steps happened — a parse was started, finished or failed, the speech model download succeeded or failed, sentence listening was used — together with the app version and the time. Failed steps also carry a short reason. These records contain no device identifier, and nothing about your files or their content.</p>
+  <p>Crash reports. If the app crashes, Firebase Crashlytics sends the stack trace, the app version, your device model and Android version, and a Firebase installation ID — a random identifier created for this app, reset when you reinstall, and not shared with other apps. Crash reports do not include your files, the text derived from them, or your feedback.</p>
+  <p>As with any network request, the servers that receive these see the IP address the request came from.</p>
+
+  <h2>Who receives it</h2>
+  <p>Google Firebase, a Google service, stores the feedback, the usage events and the crash reports on our behalf, under Google's own privacy terms.</p>
+  <p>Google Play delivers the speech model, and tells the app whether a newer version exists when you tap Check for updates.</p>
+  <p>Nobody else. The app has no advertising, no advertising identifier, and no social or profiling SDK, and none of this is sold or shared with third parties.</p>
+
+  <h2>Permissions</h2>
+  <p>Notifications: used for the playback controls and to tell you when parsing finishes. Refusing it does not affect playback.</p>
+  <p>The app does not ask for storage, location, camera, microphone or contacts. Files are opened only through the system file picker, which hands the app the single file you chose.</p>
+
+  <h2>Children and teenagers</h2>
+  <p>Audloop is made for language learners, including secondary-school students, and is rated for all ages. We do not knowingly collect personal information from children. There are no accounts, no advertising and no advertising identifiers, and the only information that ever leaves the device is what is described above.</p>
+
+  <h2>Your choices, and changes to this policy</h2>
+  <p>Submitting feedback is entirely up to you. Usage events and crash reports are sent automatically, and there is currently no in-app switch to turn them off. They carry nothing that identifies you, so we cannot look up one person's records — but if you would like something removed, use the Feedback entry and tell us roughly when it was sent, and we will search for it by that.</p>
+  <p>If this policy changes, the date at the top changes with it, and the new text ships inside the app.</p>
+
+  <h2>Contact</h2>
+  <p>Audloop has no accounts and no support email address. The way to reach us is the in-app Feedback entry, on the Profile page.</p>
+</article>
+
+<article data-lang="zh" lang="zh">
+  <h1>隐私政策</h1>
+  <p class="updated">更新日期：2026 年 9 月 16 日</p>
+
+  <h2>一句话</h2>
+  <p>「Audloop」播放你从手机里选中的音视频，并在本机把其中的语音切成句子。你导入的文件、以及由它们得到的文本，都不会离开你的手机。会走网络的只有三件事——你主动提交的反馈、一组不含身份信息的使用统计、以及应用崩溃时的崩溃日志。下面逐条说明。</p>
+
+  <h2>什么留在你手机上</h2>
+  <ul>
+    <li>导入的音视频只读，不会被复制、移动或上传。</li>
+    <li>语音识别在本机跑，用的是应用从 Google Play 下载的模型。没有任何音频会被送去别处转写。</li>
+    <li>解析出的句子存在应用内部一个私有数据库里，不上传。</li>
+    <li>从资源库删掉一条记录，删的只是应用这边的记录；手机里的原文件不受影响。</li>
+  </ul>
+
+  <h2>什么会离开手机</h2>
+  <p>你提交的反馈。在你点下「提交」时，应用会把你写的这段文字、你选的类型、应用版本、手机型号、Android 版本、系统语言以及提交时间发出去。它写进 Google Firebase 的一个数据库，里面没有账号，也没有任何能指回你个人的标识。</p>
+  <p>匿名使用统计。应用会记录几个固定步骤有没有发生——发起解析、解析成功、解析失败、语音模型下载成功、语音模型下载失败、是否用过逐句精听——连同应用版本与时间。失败的记录还会带一句简短的原因。这些记录不含设备标识，也不含你的文件或文件里的任何内容。</p>
+  <p>崩溃日志。应用崩溃时，Firebase Crashlytics 会发送堆栈、应用版本、手机型号与 Android 版本，以及一个 Firebase 安装 ID——它是为本应用随机生成的，重装即重置，不与其他应用共享。崩溃日志不含你的文件、不含由文件得到的文本，也不含你的反馈。</p>
+  <p>和任何一次网络请求一样，收到这些内容的服务器能看到请求来自哪个 IP 地址。</p>
+
+  <h2>谁收得到</h2>
+  <p>Google Firebase 是 Google 旗下的服务，代我们存放反馈、使用统计与崩溃日志，适用 Google 自己的隐私条款。</p>
+  <p>Google Play 负责下发语音模型；你点「检查更新」时，也由它告诉应用有没有新版本。</p>
+  <p>没有别人。应用里没有广告、没有广告标识符、没有社交或用户画像类的 SDK，这些数据也不出售、不提供给第三方。</p>
+
+  <h2>权限</h2>
+  <p>通知：用于播放控制条，以及解析完成时提醒你。拒绝它不影响播放。</p>
+  <p>应用不申请存储、定位、相机、麦克风或通讯录权限。文件只通过系统文件选择器打开——你选中哪一个，应用就只拿到那一个。</p>
+
+  <h2>儿童与青少年</h2>
+  <p>Audloop 面向语言学习者，其中包含中学生，内容分级为全年龄。我们不会有意收集儿童的个人信息：应用没有账号、没有广告、没有广告标识符，会离开设备的只有上面写到的那些内容。</p>
+
+  <h2>你的选择，以及这份政策的修改</h2>
+  <p>提交反馈完全由你决定。使用统计与崩溃日志是自动发送的，目前应用内没有关闭它们的开关。它们不带任何能指向个人的标识，所以我们查不到某一个人的记录——但如果你希望删掉某条内容，可以通过「意见反馈」告诉我们它大约是什么时候发出的，我们据此去找。</p>
+  <p>这份政策如有修改，顶部的日期会跟着改，新文本随应用更新下发。</p>
+
+  <h2>联系我们</h2>
+  <p>Audloop 没有账号，也没有客服邮箱。联系我们的方式就是「我的」页里的「意见反馈」。</p>
+</article>
+
+<article data-lang="ja" lang="ja">
+  <h1>プライバシーポリシー</h1>
+  <p class="updated">最終更新日：2026 年 9 月 16 日</p>
+
+  <h2>要点</h2>
+  <p>Audloop は、あなたがスマホから選んだ音声・動画を再生し、その中の音声を端末上だけで文に区切ります。取り込んだファイルと、そこから作られたテキストが端末の外へ出ることはありません。ネットワークを使うのは 3 つだけです——あなたが自ら送るフィードバック、匿名の利用イベント、そしてアプリがクラッシュしたときのクラッシュレポート。以下で順に説明します。</p>
+
+  <h2>端末に残るもの</h2>
+  <ul>
+    <li>取り込んだ音声・動画は読み取り専用です。コピーも移動もアップロードも行いません。</li>
+    <li>音声認識は端末上で動作し、アプリが Google Play からダウンロードしたモデルを使います。文字起こしのために音声がどこかへ送られることはありません。</li>
+    <li>解析で作られた文はアプリ内の非公開データベースに保存され、アップロードされません。</li>
+    <li>リソースを削除しても消えるのはアプリ側の記録だけです。スマホ内の元ファイルには手を付けません。</li>
+  </ul>
+
+  <h2>端末の外へ出るもの</h2>
+  <p>あなたが送るフィードバック。「送信」を押すと、書いた内容、選んだ種類、アプリのバージョン、端末の機種、Android のバージョン、システム言語、送信時刻が送られます。送り先は Google Firebase のデータベースで、アカウントも、あなた個人を指す識別子も含まれません。</p>
+  <p>匿名の利用イベント。アプリは、いくつかの決まった段階が起きたかどうかを記録します——解析の開始・成功・失敗、音声モデルのダウンロードの成功・失敗、文ごとのリスニングを使ったかどうか——あわせてアプリのバージョンと時刻。失敗には短い理由も付きます。これらの記録に端末識別子は含まれず、あなたのファイルやその中身にも一切触れません。</p>
+  <p>クラッシュレポート。アプリがクラッシュすると、Firebase Crashlytics がスタックトレース、アプリのバージョン、端末の機種と Android のバージョン、そして Firebase インストール ID を送ります。これはこのアプリのためにランダムに作られる識別子で、再インストールするとリセットされ、ほかのアプリとは共有されません。クラッシュレポートにあなたのファイル、そこから作られたテキスト、フィードバックは含まれません。</p>
+  <p>どのネットワーク通信でも同じですが、これらを受け取るサーバーはリクエストの発信元 IP アドレスを見ることができます。</p>
+
+  <h2>受け取る相手</h2>
+  <p>Google Firebase は Google のサービスで、フィードバック、利用イベント、クラッシュレポートを当方に代わって保管します。Google 自身のプライバシー条項が適用されます。</p>
+  <p>Google Play は音声モデルを配信し、「更新を確認」を押したときには新しいバージョンがあるかどうかをアプリに伝えます。</p>
+  <p>ほかにはいません。アプリには広告も広告識別子もなく、SNS やプロファイリングの SDK もありません。これらのデータを販売したり、第三者に提供したりすることもありません。</p>
+
+  <h2>権限</h2>
+  <p>通知：再生コントロールと、解析が終わったことを知らせるために使います。拒否しても再生には影響しません。</p>
+  <p>アプリはストレージ、位置情報、カメラ、マイク、連絡先の権限を求めません。ファイルはシステムのファイル選択画面を通してのみ開かれ、あなたが選んだその 1 つだけをアプリは受け取ります。</p>
+
+  <h2>子どもと青少年</h2>
+  <p>Audloop は語学学習者向けで、中学生・高校生も含まれ、全年齢向けの区分です。子どもの個人情報を意図的に収集することはありません。アカウントも広告も広告識別子もなく、端末の外へ出る情報は上に書いたものだけです。</p>
+
+  <h2>あなたの選択と、このポリシーの変更</h2>
+  <p>フィードバックの送信は完全に任意です。利用イベントとクラッシュレポートは自動で送信され、いまのところアプリ内に止めるスイッチはありません。個人を特定するものは含まれないため、特定の人の記録を探し出すことはできません——それでも何かを削除したい場合は、「フィードバック」から送信したおおよその時刻をお知らせください。それを手がかりに探します。</p>
+  <p>このポリシーを変更する場合は、上部の日付もあわせて変わります。新しい本文はアプリの更新とともに配信されます。</p>
+
+  <h2>お問い合わせ</h2>
+  <p>Audloop にはアカウントもサポート用メールアドレスもありません。連絡の手段は「マイページ」にある「フィードバック」です。</p>
+</article>
+
+<article data-lang="ko" lang="ko">
+  <h1>개인정보 처리방침</h1>
+  <p class="updated">최종 수정일: 2026년 9월 16일</p>
+
+  <h2>한 줄 요약</h2>
+  <p>Audloop은 휴대폰에서 고른 오디오와 동영상을 재생하고, 그 안의 음성을 기기 안에서만 문장으로 나눕니다. 가져온 파일과 거기서 만들어진 텍스트는 휴대폰을 떠나지 않습니다. 네트워크를 쓰는 것은 세 가지뿐입니다——직접 보내는 피드백, 익명 사용 이벤트, 그리고 앱이 죽었을 때의 충돌 보고서. 아래에서 차례로 설명합니다.</p>
+
+  <h2>휴대폰에 남는 것</h2>
+  <ul>
+    <li>가져온 오디오와 동영상은 읽기 전용입니다. 복사하거나 옮기거나 올리지 않습니다.</li>
+    <li>음성 인식은 기기에서 돌아가며, 앱이 Google Play에서 내려받은 모델을 씁니다. 받아쓰기를 위해 음성이 어디론가 전송되는 일은 없습니다.</li>
+    <li>분석으로 만들어진 문장은 앱 안의 비공개 데이터베이스에 저장되고 올라가지 않습니다.</li>
+    <li>리소스를 삭제해도 지워지는 것은 앱 쪽 기록뿐입니다. 휴대폰 안의 원본 파일은 건드리지 않습니다.</li>
+  </ul>
+
+  <h2>휴대폰을 떠나는 것</h2>
+  <p>직접 보내는 피드백. 「보내기」를 누르면 쓴 내용, 고른 종류, 앱 버전, 기기 모델, Android 버전, 시스템 언어, 보낸 시각이 전송됩니다. 행선지는 Google Firebase의 데이터베이스이며 계정도, 개인을 가리키는 식별자도 들어 있지 않습니다.</p>
+  <p>익명 사용 이벤트. 앱은 몇 가지 정해진 단계가 일어났는지를 기록합니다——분석 시작·성공·실패, 음성 모델 다운로드 성공·실패, 문장별 듣기를 썼는지——함께 앱 버전과 시각. 실패한 단계에는 짧은 이유도 붙습니다. 이 기록에는 기기 식별자가 없고, 파일이나 그 내용에 관한 것도 없습니다.</p>
+  <p>충돌 보고서. 앱이 죽으면 Firebase Crashlytics가 스택 트레이스, 앱 버전, 기기 모델과 Android 버전, 그리고 Firebase 설치 ID를 보냅니다. 이것은 이 앱을 위해 무작위로 만들어진 식별자로, 다시 설치하면 초기화되고 다른 앱과 공유되지 않습니다. 충돌 보고서에는 파일도, 거기서 만들어진 텍스트도, 피드백도 들어 있지 않습니다.</p>
+  <p>어떤 네트워크 요청이나 마찬가지로, 이것을 받는 서버는 요청이 나온 IP 주소를 볼 수 있습니다.</p>
+
+  <h2>받는 곳</h2>
+  <p>Google Firebase는 Google의 서비스로, 피드백과 사용 이벤트, 충돌 보고서를 저희 대신 보관합니다. Google 자체의 개인정보 약관이 적용됩니다.</p>
+  <p>Google Play는 음성 모델을 배포하고, 「업데이트 확인」을 누르면 새 버전이 있는지 앱에 알려줍니다.</p>
+  <p>그 밖에는 없습니다. 앱에는 광고도, 광고 식별자도, 소셜이나 프로파일링 SDK도 없으며, 이 데이터를 팔거나 제3자에게 제공하지도 않습니다.</p>
+
+  <h2>권한</h2>
+  <p>알림: 재생 컨트롤과 분석이 끝났음을 알리는 데 씁니다. 거부해도 재생에는 영향이 없습니다.</p>
+  <p>앱은 저장소, 위치, 카메라, 마이크, 연락처 권한을 요청하지 않습니다. 파일은 시스템 파일 선택기를 통해서만 열리며, 고른 그 하나만 앱이 받습니다.</p>
+
+  <h2>어린이와 청소년</h2>
+  <p>Audloop은 언어 학습자를 위한 앱으로, 중·고등학생도 포함하며 전체 이용가 등급입니다. 어린이의 개인정보를 알면서 수집하지 않습니다. 계정도 광고도 광고 식별자도 없고, 기기를 떠나는 정보는 위에 적은 것뿐입니다.</p>
+
+  <h2>선택권, 그리고 이 방침의 변경</h2>
+  <p>피드백을 보낼지는 전적으로 사용자가 정합니다. 사용 이벤트와 충돌 보고서는 자동으로 전송되며, 지금은 앱 안에 끄는 스위치가 없습니다. 개인을 식별하는 것이 없어 한 사람의 기록을 찾아낼 수는 없지만——그래도 무언가를 지우고 싶다면 「피드백」에서 보낸 대략의 시각을 알려주세요. 그것으로 찾아보겠습니다.</p>
+  <p>이 방침이 바뀌면 맨 위의 날짜도 함께 바뀌고, 새 본문은 앱 업데이트와 함께 배포됩니다.</p>
+
+  <h2>문의</h2>
+  <p>Audloop에는 계정도, 지원 이메일 주소도 없습니다. 연락하는 방법은 「마이」 화면의 「피드백」입니다.</p>
+</article>
+
+<article data-lang="es" lang="es">
+  <h1>Política de privacidad</h1>
+  <p class="updated">Última actualización: 16 de septiembre de 2026</p>
+
+  <h2>En resumen</h2>
+  <p>Audloop reproduce el audio y el vídeo que eliges de tu teléfono y divide su voz en frases enteramente en tu dispositivo. Tus archivos, y el texto derivado de ellos, nunca salen de tu teléfono. Solo hay tres cosas que sí van por la red: los comentarios que decides enviar, un conjunto reducido de eventos de uso anónimos y un informe de fallo si la app se cierra. Cada una se describe abajo.</p>
+
+  <h2>Qué se queda en tu teléfono</h2>
+  <ul>
+    <li>El audio y el vídeo que importas se leen en modo de solo lectura. Nunca se copian, se mueven ni se suben.</li>
+    <li>El reconocimiento de voz se ejecuta en tu dispositivo, con un modelo que la app descarga de Google Play. No se envía audio a ningún sitio para transcribirlo.</li>
+    <li>Las frases que produce el análisis se guardan en una base de datos privada dentro de la app y no se suben.</li>
+    <li>Si borras un recurso, se elimina el registro que tiene la app. El archivo original de tu teléfono no se toca.</li>
+  </ul>
+
+  <h2>Qué sale de tu teléfono</h2>
+  <p>Los comentarios que envías. Cuando pulsas Enviar, la app manda lo que has escrito, el tipo que has elegido, la versión de la app, el modelo de tu dispositivo, tu versión de Android, el idioma del sistema y el momento del envío. Va a una base de datos de Google Firebase y no contiene ninguna cuenta ni ningún identificador que apunte a ti.</p>
+  <p>Eventos de uso anónimos. La app registra si han ocurrido ciertos pasos —se inició, terminó o falló un análisis; la descarga del modelo de voz tuvo éxito o falló; se usó la escucha por frases— junto con la versión de la app y la hora. Los pasos fallidos llevan además un motivo breve. Estos registros no contienen identificador de dispositivo ni nada sobre tus archivos o su contenido.</p>
+  <p>Informes de fallo. Si la app se cierra, Firebase Crashlytics envía el rastro de pila, la versión de la app, el modelo de tu dispositivo y tu versión de Android, y un ID de instalación de Firebase: un identificador aleatorio creado para esta app, que se restablece al reinstalarla y no se comparte con otras apps. Los informes de fallo no incluyen tus archivos, ni el texto derivado de ellos, ni tus comentarios.</p>
+  <p>Como en cualquier petición de red, los servidores que reciben todo esto ven la dirección IP desde la que llegó.</p>
+
+  <h2>Quién lo recibe</h2>
+  <p>Google Firebase, un servicio de Google, almacena por nosotros los comentarios, los eventos de uso y los informes de fallo, bajo los propios términos de privacidad de Google.</p>
+  <p>Google Play entrega el modelo de voz y le dice a la app si existe una versión más reciente cuando pulsas Buscar actualizaciones.</p>
+  <p>Nadie más. La app no tiene publicidad, ni identificador de publicidad, ni SDK social o de perfilado, y nada de esto se vende ni se comparte con terceros.</p>
+
+  <h2>Permisos</h2>
+  <p>Notificaciones: se usan para los controles de reproducción y para avisarte de que el análisis ha terminado. Rechazarlas no afecta a la reproducción.</p>
+  <p>La app no pide permiso de almacenamiento, ubicación, cámara, micrófono ni contactos. Los archivos se abren solo a través del selector del sistema, que le entrega a la app el único archivo que hayas elegido.</p>
+
+  <h2>Menores y adolescentes</h2>
+  <p>Audloop está pensada para estudiantes de idiomas, incluidos los de secundaria, y tiene clasificación para todas las edades. No recogemos a sabiendas información personal de menores. No hay cuentas, ni publicidad, ni identificadores de publicidad, y lo único que sale del dispositivo es lo descrito arriba.</p>
+
+  <h2>Tus opciones y los cambios de esta política</h2>
+  <p>Enviar comentarios depende enteramente de ti. Los eventos de uso y los informes de fallo se envían solos y por ahora no hay ningún interruptor en la app para desactivarlos. No llevan nada que te identifique, así que no podemos buscar los registros de una persona concreta; pero si quieres que se elimine algo, usa la entrada de Comentarios y dinos aproximadamente cuándo se envió, y lo buscaremos por ahí.</p>
+  <p>Si esta política cambia, la fecha de arriba cambia con ella y el texto nuevo llega dentro de la app.</p>
+
+  <h2>Contacto</h2>
+  <p>Audloop no tiene cuentas ni dirección de correo de soporte. La forma de contactar es la entrada de Comentarios, en la página Perfil.</p>
+</article>
+
+</main>
+
+<script>
+(function () {
+  // 语言名写成各自语言里的样子，理由见文件头。要加语种，这里加一项、上面加一个 <article>。
+  var LANGS = [
+    { code: 'en', label: 'English' },
+    { code: 'zh', label: '中文' },
+    { code: 'ja', label: '日本語' },
+    { code: 'ko', label: '한국어' },
+    { code: 'es', label: 'Español' }
+  ];
+  var FALLBACK = 'en';
+
+  function match(tag) {
+    tag = String(tag || '').toLowerCase();
+    for (var i = 0; i < LANGS.length; i++) {
+      var c = LANGS[i].code;
+      if (tag === c || tag.indexOf(c + '-') === 0) return c;
+    }
+    return null;
+  }
+
+  function articles() {
+    return document.querySelectorAll('article[data-lang]');
+  }
+
+  function show(code) {
+    var els = articles();
+    var sel = null;
+    for (var i = 0; i < els.length; i++) {
+      var on = els[i].getAttribute('data-lang') === code;
+      els[i].classList.toggle('on', on);
+      if (on) sel = els[i];
+    }
+
+    document.documentElement.lang = code;
+    if (sel) {
+      var h1 = sel.querySelector('h1');
+      if (h1) document.title = 'Audloop — ' + h1.textContent;
+    }
+
+    var btns = document.querySelectorAll('#langs button');
+    for (var j = 0; j < btns.length; j++) {
+      var cur = btns[j].getAttribute('data-lang') === code;
+      btns[j].setAttribute('aria-current', cur ? 'true' : 'false');
+    }
+  }
+
+  function pick() {
+    var q = new URLSearchParams(location.search).get('lang');
+    var hit = match(q);
+    if (hit) return hit;
+
+    var list = navigator.languages || [navigator.language];
+    for (var i = 0; i < list.length; i++) {
+      hit = match(list[i]);
+      if (hit) return hit;
+    }
+    return FALLBACK;
+  }
+
+  function select(code) {
+    show(code);
+    // 把语言记进 URL，切完复制出去的那条链接仍然指着同一种语言。
+    if (history.replaceState) {
+      var url = new URL(location.href);
+      url.searchParams.set('lang', code);
+      history.replaceState(null, '', url);
+    }
+  }
+
+  var nav = document.getElementById('langs');
+  LANGS.forEach(function (l) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = l.label;
+    b.setAttribute('data-lang', l.code);
+    b.addEventListener('click', function () { select(l.code); });
+    nav.appendChild(b);
+  });
+
+  // CSS 里那条 html.js 的规矩只在这行跑过之后才生效：没 JS 就没有切换器，只剩英文。
+  document.documentElement.classList.add('js');
+
+  // 靠浏览器语言选中的不写回 URL——那是浏览器的判断，不是用户在这页上做的选择。
+  show(pick());
+})();
+</script>
+
+</body>
+</html>
